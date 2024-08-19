@@ -7,3 +7,9 @@
 2. RSC(react server component)에 스토어 데이터가 표시되지 않아야 한다
 
 3. RSC는 변경 불가능한 데이터를 표시하고 클라이언트 컴포넌트는 변경 가능한 데이터를 표시합니다.
+
+## 참고자료
+
+1. [pronextjs.dev](https://www.pronextjs.dev/tutorials/state-management)
+2. [tkdodo.eu](https://tkdodo.eu/blog/zustand-and-react-context)
+3. [zustand-docs](https://zustand.docs.pmnd.rs/getting-started/introduction)
