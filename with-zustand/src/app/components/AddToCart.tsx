@@ -7,7 +7,7 @@ export default function AddToCart({
 }: {
   addToCartAction: () => Promise<Cart>;
 }) {
-  const [, setCart] = useCart();
+  const setCart = useCart()((state) => state.setCart);
   return (
     <button
       className="mt-6 px-8 py-2 text-lg font-bold text-white bg-blue-800 rounded-lg"

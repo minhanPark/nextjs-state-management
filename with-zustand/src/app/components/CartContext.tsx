@@ -1,20 +1,27 @@
 "use client";
 
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
+import { create } from "zustand";
 import { type Cart } from "@/api/types";
 
-const useCartState = (cart: Cart) => useState<Cart>(cart);
+const createStore = (cart: Cart) =>
+  create<{ cart: Cart; setCart: (cart: Cart) => void }>((set) => ({
+    cart,
+    setCart(cart) {
+      set({ cart });
+    },
+  }));
 
-export const CartContext = createContext<ReturnType<
-  typeof useCartState
-> | null>(null);
+export const CartContext = createContext<ReturnType<typeof createStore> | null>(
+  null
+);
 
 export const useCart = () => {
-  const cart = React.useContext(CartContext);
-  if (!cart) {
+  if (!CartContext) {
     throw new Error("useCart must be used within a CartProvider");
   }
-  return cart;
+
+  return useContext(CartContext)!;
 };
 
 export const CartProvider = ({
@@ -24,10 +31,6 @@ export const CartProvider = ({
   children: React.ReactNode;
   initialValue: Cart;
 }) => {
-  const [cart, setCart] = useCartState(initialValue);
-  return (
-    <CartContext.Provider value={[cart, setCart]}>
-      {children}
-    </CartContext.Provider>
-  );
+  const [store] = useState(() => createStore(initialValue));
+  return <CartContext.Provider value={store}>{children}</CartContext.Provider>;
 };

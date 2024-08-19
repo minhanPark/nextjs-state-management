@@ -11,7 +11,7 @@ export default function Header({
 }: {
   clearCartAction: () => Promise<Cart>;
 }) {
-  const [cart] = useCart();
+  const cart = useCart()((state) => state.cart);
   const [showCart, setShowCart] = useState(false);
 
   return (
